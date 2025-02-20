@@ -161,7 +161,16 @@ async def search(query: SearchQuery):
     for result in search_results:
         markdown_response += f"- [{result.title}]({result.link})\n"
     
-    return {"response": markdown_response}
+    # 5. 返回完整的响应数据
+    return {
+        "response": markdown_response,
+        "optimized_query": optimized_query,
+        "search_results": [{
+            "title": result.title,
+            "link": result.link,
+            "snippet": result.snippet
+        } for result in search_results]
+    }
 
 if __name__ == "__main__":
     import uvicorn
